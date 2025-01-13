@@ -12,16 +12,27 @@ export default class NotesAPI {
     const existingNote = notes.find((note) => note.id == noteToSave.id);
 
     if (existingNote) {
-      existingNote.title = noteToSave.title;
-      existingNote.body = noteToSave.body;
-      existingNote.updated = noteToSave.updated;
+      this.updateExistingNote(existingNote, noteToSave);
     } else {
-      noteToSave.id = Math.floor(Math.random() * 1000000);
-      noteToSave.updated = new Date().toISOString();
-      notes.push(noteToSave);
+      this.createAndAddNewNote(noteToSave, notes);
     }
 
     localStorage.setItem("notes", JSON.stringify(notes));
+  }
+
+  private static updateExistingNote(
+    existingNote: Note,
+    noteToSave: Note
+  ): void {
+    existingNote.title = noteToSave.title;
+    existingNote.body = noteToSave.body;
+    existingNote.updated = noteToSave.updated;
+  }
+
+  private static createAndAddNewNote(noteToSave: Note, notes: Note[]): void {
+    noteToSave.id = Math.floor(Math.random() * 1000000);
+    noteToSave.updated = new Date().toISOString();
+    notes.push(noteToSave);
   }
 
   static deleteNote(id: number): void {
