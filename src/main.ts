@@ -1,24 +1,28 @@
 import "./style.scss";
-import typescriptLogo from "./typescript.svg";
-import viteLogo from "/vite.svg";
-import { setupCounter } from "./counter.ts";
+import NotesAPI from "./api/NotesAPI";
+
+// NotesAPI.saveNote({
+//   title: "memo",
+//   body: "make now!",
+// });
+
+NotesAPI.deleteNote(858639);
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`;
+    <div class="notes" id="app">
+      <div class="notesSidebar">
+        <button class="notesAdd" type="button">ノートを追加する</button>
+        <div class="notesList">
+          <div class="notesList-item notesList-item--selected">
+            <div class="notesSmall-title">Javascriptの勉強</div>
+            <div class="notesSmall-body">今日はif文を学んだ</div>
+            <div class="notesSmall-updated">2022/06/02</div>
+          </div>
+        </div>
+      </div>
+      <div class="notesPreview">
+        <input type="text" class="notesTitle" placeholder="タイトルを記入" />
+        <textarea class="notesBody">ここに本文を追加</textarea>
+      </div>
 
-setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
+`;
