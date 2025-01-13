@@ -28,4 +28,11 @@ export default class NotesAPI {
 
     localStorage.setItem("notes", JSON.stringify(notes));
   }
+
+  static deleteNote(id: number): void {
+    const notes = this.getAllNotes();
+    const nowNotes = notes.filter((note) => note.id !== id);
+
+    localStorage.setItem("notes", JSON.stringify(nowNotes));
+  }
 }

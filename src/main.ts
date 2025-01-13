@@ -1,10 +1,12 @@
 import "./style.scss";
 import NotesAPI from "./api/NotesAPI";
 
-NotesAPI.saveNote({
-  title: "memo",
-  body: "make now!",
-});
+// NotesAPI.saveNote({
+//   title: "memo",
+//   body: "make now!",
+// });
+
+NotesAPI.deleteNote(858639);
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     <div class="notes" id="app">
