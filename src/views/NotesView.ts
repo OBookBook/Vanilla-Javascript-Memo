@@ -26,5 +26,21 @@ export default class NotesView {
       </div>
     </div>
     `;
+
+    const btnAddNote = this.root.querySelector(".notesAdd");
+    btnAddNote.addEventListener("click", () => {
+      this.onNoteAdd();
+    });
+
+    const inputTitle = this.root.querySelector(".notesTitle");
+    const inputBody = this.root.querySelector(".notesBody");
+    [inputTitle, inputBody].forEach((inputFiled) => {
+      inputFiled.addEventListener("blur", () => {
+        const updateTitle = inputTitle.value.trim();
+        const updateBody = inputBody.value.trim();
+
+        this.onNoteEdit(updateTitle, updateBody);
+      });
+    });
   }
 }
