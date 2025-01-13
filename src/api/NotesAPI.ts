@@ -30,4 +30,8 @@ export default class NotesAPI {
 
     localStorage.setItem("notes", JSON.stringify(nowNotes));
   }
+
+  static clearStorage(): void {
+    localStorage.removeItem("notes");
+  }
 }
