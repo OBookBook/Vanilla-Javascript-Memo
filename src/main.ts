@@ -1,5 +1,4 @@
 import "./style.scss";
-import { setupCounter } from "./counter.ts";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     <div class="notes" id="app">
@@ -19,5 +18,3 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       </div>
 
 `;
-
-setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
