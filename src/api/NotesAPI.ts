@@ -1,9 +1,4 @@
-interface Note {
-  id?: number;
-  title: string;
-  body: string;
-  updated?: string;
-}
+import { Note } from "../types/Node";
 
 export default class NotesAPI {
   static getAllNotes(): Note[] {
