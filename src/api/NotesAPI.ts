@@ -14,10 +14,17 @@ export default class NotesAPI {
 
   static saveNote(noteToSave: Note): void {
     const notes = this.getAllNotes();
+    const existingNote = notes.find((note) => note.id == noteToSave.id);
 
-    noteToSave.id = Math.floor(Math.random() * 1000000);
-    noteToSave.updated = new Date().toISOString();
-    notes.push(noteToSave);
+    if (existingNote) {
+      existingNote.title = noteToSave.title;
+      existingNote.body = noteToSave.body;
+      existingNote.updated = noteToSave.updated;
+    } else {
+      noteToSave.id = noteToSave.id;
+      noteToSave.updated = new Date().toISOString();
+      notes.push(noteToSave);
+    }
 
     localStorage.setItem("notes", JSON.stringify(notes));
   }

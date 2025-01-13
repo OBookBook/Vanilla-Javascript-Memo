@@ -2,6 +2,7 @@ import "./style.scss";
 import NotesAPI from "./api/NotesAPI";
 
 NotesAPI.saveNote({
+  id: 1,
   title: "memo",
   body: "make now!",
 });
