@@ -14,8 +14,8 @@ const view = new NotesView(app, {
     console.log(newTitle);
     console.log(newBody);
   },
-  onNoteDelete() {
-    console.log("delete note");
+  onNoteDelete(id: string) {
+    console.log(id + "delete note");
   },
 });
 
