@@ -1,7 +1,6 @@
 import NotesAPI from "./api/NotesAPI";
 import "./style.scss";
 import NotesView from "./views/NotesView";
-
 const app = document.getElementById("app");
 const view = new NotesView(app, {
   onNoteSelect() {
@@ -10,9 +9,12 @@ const view = new NotesView(app, {
   onNoteAdd() {
     console.log("add note");
   },
-  onNoteEdit(newTitle, newBody) {
+  onNoteEdit(newTitle: string, newBody: string) {
     console.log(newTitle);
     console.log(newBody);
+  },
+  onNoteDelete() {
+    console.log("delete note");
   },
 });
 
