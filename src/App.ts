@@ -1,7 +1,12 @@
+import { Note } from "./types/Node";
 import NotesView from "./views/NotesView";
 
 export default class App {
-  constructor(root) {
+  notes: Note[];
+  activeNote: any;
+  view: NotesView;
+
+  constructor(root: HTMLElement | null) {
     this.notes = [];
     this.activeNote = null;
     this.view = new NotesView(root, this._handlers());
