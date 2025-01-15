@@ -15,7 +15,7 @@ export default class App {
     this._refreshNotes();
   }
 
-  _refreshNotes() {
+  private _refreshNotes() {
     const notes = NotesAPI.getAllNotes();
     this._setNotes(notes);
 
@@ -24,17 +24,17 @@ export default class App {
     }
   }
 
-  _setActiveNote(note: Note) {
+  private _setActiveNote(note: Note) {
     this.activeNote = note;
     this.view.updateActiveNote(note);
   }
 
-  _setNotes(notes: Note[]) {
+  private _setNotes(notes: Note[]) {
     this.notes = notes;
     this.view.updateNoteList(notes);
   }
 
-  _handlers() {
+  private _handlers() {
     return {
       onNoteSelect(id: string) {
         console.log(id + "No selected note");
