@@ -1,28 +1,5 @@
 import "./style.scss";
-import NotesAPI from "./api/NotesAPI";
+import App from "./App";
 
-// NotesAPI.saveNote({
-//   title: "memo",
-//   body: "make now!",
-// });
-
-NotesAPI.deleteNote(858639);
-
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-    <div class="notes" id="app">
-      <div class="notesSidebar">
-        <button class="notesAdd" type="button">ノートを追加する</button>
-        <div class="notesList">
-          <div class="notesList-item notesList-item--selected">
-            <div class="notesSmall-title">Javascriptの勉強</div>
-            <div class="notesSmall-body">今日はif文を学んだ</div>
-            <div class="notesSmall-updated">2022/06/02</div>
-          </div>
-        </div>
-      </div>
-      <div class="notesPreview">
-        <input type="text" class="notesTitle" placeholder="タイトルを記入" />
-        <textarea class="notesBody">ここに本文を追加</textarea>
-      </div>
-
-`;
+const root = document.getElementById("app");
+const app = new App(root);
