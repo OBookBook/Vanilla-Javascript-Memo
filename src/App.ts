@@ -1,4 +1,5 @@
 import { Note } from "./types/Node";
+import NotesAPI from "./api/NotesAPI";
 import NotesView from "./views/NotesView";
 
 export default class App {
@@ -10,6 +11,18 @@ export default class App {
     this.notes = [];
     this.activeNote = null;
     this.view = new NotesView(root, this._handlers());
+
+    this._refreshNotes();
+  }
+
+  _refreshNotes() {
+    const notes = NotesAPI.getAllNotes();
+    this._setNotes(notes);
+  }
+
+  _setNotes(notes: Note[]) {
+    this.notes = notes;
+    this.view.updateNoteList(notes);
   }
 
   _handlers() {
