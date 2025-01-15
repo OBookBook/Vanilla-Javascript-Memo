@@ -4,7 +4,7 @@ import NotesView from "./views/NotesView";
 
 export default class App {
   notes: Note[];
-  activeNote: any;
+  activeNote: Note | null;
   view: NotesView;
 
   constructor(root: HTMLElement | null) {
