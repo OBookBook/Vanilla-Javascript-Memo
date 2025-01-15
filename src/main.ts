@@ -1,3 +1,4 @@
+import NotesAPI from "./api/NotesAPI";
 import "./style.scss";
 import NotesView from "./views/NotesView";
 
@@ -14,3 +15,6 @@ const view = new NotesView(app, {
     console.log(newBody);
   },
 });
+
+const notes = NotesAPI.getAllNotes();
+view.updateNoteList(notes);
