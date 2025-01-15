@@ -73,8 +73,15 @@ export default class NotesView {
         note.body,
         new Date(note.updated)
       );
-
       notesListContainer.insertAdjacentHTML("beforeend", html);
     }
+
+    notesListContainer
+      .querySelectorAll(".notesList-item")
+      .forEach((noteListItem) => {
+        noteListItem.addEventListener("click", () => {
+          this.onNoteSelect(noteListItem.dataset.noteId);
+        });
+      });
   }
 }
