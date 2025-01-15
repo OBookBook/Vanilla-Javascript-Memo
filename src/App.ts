@@ -1,6 +1,6 @@
-import { Note } from "./types/Node";
 import NotesAPI from "./api/NotesAPI";
 import NotesView from "./views/NotesView";
+import { Note, NoteEventHandlers } from "./types/Node";
 
 export default class App {
   notes: Note[];
@@ -15,26 +15,23 @@ export default class App {
     this._refreshNotes();
   }
 
-  private _refreshNotes() {
+  private _refreshNotes(): void {
     const notes = NotesAPI.getAllNotes();
     this._setNotes(notes);
-
-    if (notes.length > 0) {
-      this._setActiveNote(notes[0]);
-    }
+    if (notes.length > 0) this._setActiveNote(notes[0]);
   }
 
-  private _setActiveNote(note: Note) {
+  private _setActiveNote(note: Note): void {
     this.activeNote = note;
     this.view.updateActiveNote(note);
   }
 
-  private _setNotes(notes: Note[]) {
+  private _setNotes(notes: Note[]): void {
     this.notes = notes;
     this.view.updateNoteList(notes);
   }
 
-  private _handlers() {
+  private _handlers(): NoteEventHandlers {
     return {
       onNoteSelect(id: string) {
         console.log(id + "No selected note");
