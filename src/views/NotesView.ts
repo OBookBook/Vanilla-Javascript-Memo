@@ -1,7 +1,15 @@
+import { Note, NoteEventHandlers } from "../types/Node";
+
 export default class NotesView {
+  root: HTMLElement;
+  onNoteSelect: (id: string) => void;
+  onNoteAdd: () => void;
+  onNoteEdit: (newTitle: string, newBody: string) => void;
+  onNoteDelete: (id: string) => void;
+
   constructor(
-    root,
-    { onNoteSelect, onNoteAdd, onNoteEdit, onNoteDelete } = {}
+    root: HTMLElement,
+    { onNoteSelect, onNoteAdd, onNoteEdit, onNoteDelete }: NoteEventHandlers
   ) {
     this.root = root;
     this.onNoteSelect = onNoteSelect;
@@ -27,24 +35,34 @@ export default class NotesView {
     </div>
     `;
 
-    const btnAddNote = this.root.querySelector(".notesAdd");
-    btnAddNote.addEventListener("click", () => {
-      this.onNoteAdd();
-    });
-
-    const inputTitle = this.root.querySelector(".notesTitle");
-    const inputBody = this.root.querySelector(".notesBody");
-    [inputTitle, inputBody].forEach((inputFiled) => {
-      inputFiled.addEventListener("blur", () => {
-        const updateTitle = inputTitle.value.trim();
-        const updateBody = inputBody.value.trim();
-
-        this.onNoteEdit(updateTitle, updateBody);
+    const btnAddNote = this.root.querySelector(
+      ".notesAdd"
+    ) as HTMLButtonElement;
+    if (btnAddNote) {
+      btnAddNote.addEventListener("click", () => {
+        this.onNoteAdd();
       });
-    });
+    }
+
+    const inputTitle = this.root.querySelector(
+      ".notesTitle"
+    ) as HTMLInputElement;
+    const inputBody = this.root.querySelector(
+      ".notesBody"
+    ) as HTMLTextAreaElement;
+    if (inputTitle && inputBody) {
+      [inputTitle, inputBody].forEach((inputFiled) => {
+        inputFiled.addEventListener("blur", () => {
+          const updateTitle = inputTitle.value.trim();
+          const updateBody = inputBody.value.trim();
+
+          this.onNoteEdit(updateTitle, updateBody);
+        });
+      });
+    }
   }
 
-  _createListItemHTML(id, title, body, updated) {
+  _createListItemHTML(id: number, title: string, body: string, updated: Date) {
     const MAX_BODY_LENGTH = 60;
     body = body || "";
 
@@ -64,46 +82,57 @@ export default class NotesView {
     `;
   }
 
-  updateNoteList(notes) {
-    const notesListContainer = this.root.querySelector(".notesList");
+  updateNoteList(notes: Note[]) {
+    const notesListContainer = this.root.querySelector(
+      ".notesList"
+    ) as HTMLElement;
+    if (notesListContainer) {
+      notesListContainer.innerHTML = "";
 
-    notesListContainer.innerHTML = "";
+      for (const note of notes) {
+        const html = this._createListItemHTML(
+          note.id!,
+          note.title,
+          note.body,
+          new Date(note.updated!)
+        );
+        notesListContainer.insertAdjacentHTML("beforeend", html);
+      }
 
-    for (const note of notes) {
-      const html = this._createListItemHTML(
-        note.id,
-        note.title,
-        note.body,
-        new Date(note.updated)
-      );
-      notesListContainer.insertAdjacentHTML("beforeend", html);
-    }
+      notesListContainer
+        .querySelectorAll(".notesList-item")
+        .forEach((noteListItem) => {
+          const noteId = (noteListItem as HTMLElement).dataset.noteId;
+          if (noteId) {
+            noteListItem.addEventListener("click", () => {
+              this.onNoteSelect(noteId);
+            });
 
-    notesListContainer
-      .querySelectorAll(".notesList-item")
-      .forEach((noteListItem) => {
-        noteListItem.addEventListener("click", () => {
-          this.onNoteSelect(noteListItem.dataset.noteId);
-        });
-
-        noteListItem.addEventListener("dblclick", () => {
-          const doDelete = confirm("OK Delete??");
-          console.table([doDelete]);
-          if (doDelete) {
-            this.onNoteDelete(noteListItem.dataset.noteId);
+            noteListItem.addEventListener("dblclick", () => {
+              const doDelete = confirm("OK Delete??");
+              if (doDelete) {
+                this.onNoteDelete(noteId);
+              }
+            });
           }
         });
-      });
+    }
   }
 
-  updateActiveNote(note) {
-    this.root.querySelector(".notesTitle").value = note.title;
-    this.root.querySelector(".notesBody").value = note.body;
-    this.root.querySelectorAll(".notesList-item").forEach((noteListItem) => {
-      noteListItem.classList.remove("notesList-item--selected");
-    });
-    this.root
-      .querySelector(`.notesList-item[data-note-id="${note.id}"]`)
-      .classList.add("notesList-item--selected");
+  updateActiveNote(note: Note) {
+    const titleInput = this.root.querySelector(
+      ".notesTitle"
+    ) as HTMLInputElement;
+    const bodyInput = this.root.querySelector(
+      ".notesBody"
+    ) as HTMLTextAreaElement;
+    if (titleInput && bodyInput) {
+      titleInput.value = note.title;
+      bodyInput.value = note.body;
+    }
+    const selectedItem = this.root.querySelector(
+      `.notesList-item[data-note-id="${note.id}"]`
+    ) as HTMLElement;
+    if (selectedItem) selectedItem.classList.add("notesList-item--selected");
   }
 }

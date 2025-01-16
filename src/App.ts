@@ -7,7 +7,7 @@ export default class App {
   activeNote: Note | null;
   view: NotesView;
 
-  constructor(root: HTMLElement | null) {
+  constructor(root: HTMLElement) {
     this.notes = [];
     this.activeNote = null;
     this.view = new NotesView(root, this._handlers());
