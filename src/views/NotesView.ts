@@ -67,6 +67,8 @@ export default class NotesView {
   updateNoteList(notes) {
     const notesListContainer = this.root.querySelector(".notesList");
 
+    notesListContainer.innerHTML = "";
+
     for (const note of notes) {
       const html = this._createListItemHTML(
         note.id,

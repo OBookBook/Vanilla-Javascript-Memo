@@ -37,8 +37,13 @@ export default class App {
         const selectedNote = this.notes.find((note) => String(note.id) === id);
         if (selectedNote) this._setActiveNote(selectedNote);
       },
-      onNoteAdd() {
-        console.log("add note");
+      onNoteAdd: () => {
+        const newNote = {
+          title: "New Note",
+          body: "Add text here",
+        };
+        NotesAPI.saveNote(newNote);
+        this._refreshNotes();
       },
       onNoteEdit: (newTitle: string, newBody: string) => {
         NotesAPI.saveNote({
