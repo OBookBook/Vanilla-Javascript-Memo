@@ -7,11 +7,10 @@ export default class App {
   activeNote: Note | null;
   view: NotesView;
 
-  constructor(root: HTMLElement | null) {
+  constructor(root: HTMLElement) {
     this.notes = [];
     this.activeNote = null;
     this.view = new NotesView(root, this._handlers());
-
     this._refreshNotes();
   }
 
@@ -33,18 +32,30 @@ export default class App {
 
   private _handlers(): NoteEventHandlers {
     return {
-      onNoteSelect(id: string) {
-        console.log(id + "No selected note");
+      onNoteSelect: (id: string) => {
+        console.log(id + " No selected note");
+        const selectedNote = this.notes.find((note) => String(note.id) === id);
+        if (selectedNote) this._setActiveNote(selectedNote);
       },
-      onNoteAdd() {
-        console.log("add note");
+      onNoteAdd: () => {
+        const newNote = {
+          title: "New Note",
+          body: "Add text here",
+        };
+        NotesAPI.saveNote(newNote);
+        this._refreshNotes();
       },
-      onNoteEdit(newTitle: string, newBody: string) {
-        console.log(newTitle);
-        console.log(newBody);
+      onNoteEdit: (newTitle: string, newBody: string) => {
+        NotesAPI.saveNote({
+          id: this.activeNote?.id,
+          title: newTitle,
+          body: newBody,
+        });
+        this._refreshNotes();
       },
-      onNoteDelete(id: string) {
-        console.log(id + "delete note");
+      onNoteDelete: (id: string) => {
+        NotesAPI.deleteNote(id);
+        this._refreshNotes();
       },
     };
   }
