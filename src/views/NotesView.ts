@@ -46,6 +46,7 @@ export default class NotesView {
 
   _createListItemHTML(id, title, body, updated) {
     const MAX_BODY_LENGTH = 60;
+    body = body || "";
 
     return `
       <div class="notesList-item" data-note-id=${id}>
