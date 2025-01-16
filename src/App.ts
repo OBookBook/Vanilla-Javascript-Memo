@@ -32,8 +32,10 @@ export default class App {
 
   private _handlers(): NoteEventHandlers {
     return {
-      onNoteSelect(id: string) {
-        console.log(id + "No selected note");
+      onNoteSelect: (id: string) => {
+        console.log(id + " No selected note");
+        const selectedNote = this.notes.find((note) => String(note.id) === id);
+        if (selectedNote) this._setActiveNote(selectedNote);
       },
       onNoteAdd() {
         console.log("add note");
