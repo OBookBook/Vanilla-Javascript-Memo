@@ -88,7 +88,10 @@ export default class NotesView {
 
         noteListItem.addEventListener("dblclick", () => {
           const doDelete = confirm("OK Delete??");
-          if (doDelete) this.onNoteDelete(noteListItem.dataset.nodeId);
+          console.table([doDelete]);
+          if (doDelete) {
+            this.onNoteDelete(noteListItem.dataset.noteId);
+          }
         });
       });
   }

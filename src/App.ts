@@ -53,8 +53,9 @@ export default class App {
         });
         this._refreshNotes();
       },
-      onNoteDelete(id: string) {
-        console.log(id + "delete note");
+      onNoteDelete: (id: string) => {
+        NotesAPI.deleteNote(id);
+        this._refreshNotes();
       },
     };
   }

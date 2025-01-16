@@ -35,9 +35,9 @@ export default class NotesAPI {
     notes.push(noteToSave);
   }
 
-  static deleteNote(id: number): void {
+  static deleteNote(id: string): void {
     const notes = this.getAllNotes();
-    const nowNotes = notes.filter((note) => note.id !== id);
+    const nowNotes = notes.filter((note) => note.id?.toString() !== id);
 
     localStorage.setItem("notes", JSON.stringify(nowNotes));
   }
